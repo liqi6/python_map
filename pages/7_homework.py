@@ -1,14 +1,8 @@
-m = leafmap.Map(center=[24, 124], zoom=4)
-people = "https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-000605-071"
-regions = "https://maps.nlsc.gov.tw/download/CH_3857_Contour_OpenData.zip"
+import leafmap
 
-m.add_geojson(regions, layer_name="US Regions")
-m.add_points_from_xy(
-    cities,
-    x="longitude",
-    y="latitude",
-    color_column="region",
-    icon_names=["gear", "map", "leaf", "globe"],
-    spin=True,
-    add_legend=True,
+
+m = leafmap.Map(center=(22.439, 120.538), zoom=14, height="600px") 
+m.split_map(
+    left_layer="HYBRID", right_layer="ESA WorldCover 2020"
 )
+m.add_legend(title="ESA Land Cover", builtin_legend="ESA_WorldCover")
