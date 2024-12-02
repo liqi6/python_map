@@ -7,5 +7,6 @@ m.add_points_from_xy(
   data,
   x="lon",
   y="lat",
+  icon_names=["MarketName", "YearMonth", "ClosedDate"],
   spin=True,
 )
