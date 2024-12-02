@@ -9,5 +9,5 @@ m.add_points_from_xy(
   y="StationLatitude",
   icon_names=["StationName", "status", "CountyName","Location"],
   spin=True,
-  m.to_streamlit(height=500)
   )
+  m.to_streamlit(height=500)
