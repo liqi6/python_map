@@ -53,14 +53,6 @@ st_folium(m, width=800)
 csv_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/%E8%97%BA%E8%8D%89%E6%AD%B7%E5%8F%B2%E5%88%86%E5%B8%83%E6%95%B8%E6%93%9A.csv"
 data = pd.read_csv(csv_url)
 
-# 顯示資料以確認是否正確讀取
-st.write("資料已成功讀取：")
-st.write(data.head())  # 顯示資料的前五行
-
-# 顯示資料的列名
-st.write("資料的列名：")
-st.write(data.columns)
-
 # 確認資料框架是否包含所需的欄位
 required_columns = ['緯度', '經度', '種植面積 (公頃)', '年份', '地區']
 missing_columns = [col for col in required_columns if col not in data.columns]
