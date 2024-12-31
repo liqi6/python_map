@@ -71,10 +71,6 @@ try:
 except Exception as e:
     st.error(f"Leafmap 地圖繪製失敗: {e}")
 
-# 定義資料來源
-csv_1950_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/final_planting_area.csv"
-geojson_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/simplified_townships.geojson"
-
 # 讀取資料
 st.subheader("讀取資料中...")
 try:
