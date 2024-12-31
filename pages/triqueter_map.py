@@ -93,3 +93,26 @@ for _, row in data.iterrows():
 # 在 Streamlit 中顯示 Folium 地圖
 st.subheader("各地區不同年份種植面積地圖")
 st_folium(m, width=725)
+
+csv_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/final_planting_area.csv"
+geojson_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/simplified_townships.geojson"
+
+# 讀取 CSV 和 GeoJSON 資料
+data = pd.read_csv(csv_url)
+gdf = gpd.read_file(geojson_url)
+
+# 只選取1950年的資料
+data_1950 = data[data['年份'] == 1950]
+
+# 合併資料（根據地區名稱）
+gdf = gdf.merge(data_1950, left_on="name", right_on="地區", how="left", suffixes=('_geojson', '_csv'))
+
+# 創建 Leafmap 地圖，設置中心點和縮放級別
+m = leafmap.Map(center=[24.406, 120.653], zoom=12)
+
+# 添加種植面積資料到地圖中
+m.add_data(gdf, column="種植面積 (公頃)", cmap="Blues", legend_title="1950年種植面積 (公頃)")
+
+# 顯示地圖
+st.subheader("1950年各地區種植面積地圖")
+st.pydeck_chart(m.to_pydeck()) 
