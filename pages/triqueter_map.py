@@ -7,7 +7,7 @@ from streamlit_folium import st_folium
 import leafmap
 
 # 標題
-st.title("歷史種植分佈數據可視化")
+st.title("藺草種植分佈地圖")
 
 @st.cache_data
 def load_data():
@@ -115,4 +115,7 @@ m.add_data(gdf, column="種植面積 (公頃)", cmap="Blues", legend_title="1950
 
 # 顯示地圖
 st.subheader("1950年各地區種植面積地圖")
-st.pydeck_chart(m.to_pydeck()) 
+st.write("這是1950年每個地區的種植面積地圖。")
+
+# 使用 streamlit_folium 顯示 Leafmap 地圖
+st_folium(m, width=725)
