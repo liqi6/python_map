@@ -7,7 +7,7 @@ from streamlit_folium import st_folium
 import leafmap
 
 # 標題
-st.title("歷史種植分佈數據可視化")
+st.title("藺草種植分佈地圖")
 
 @st.cache_data
 def load_data():
