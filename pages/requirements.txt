@@ -1,8 +1,9 @@
 streamlit
-folium
-streamlit-folium
-leafmap
 pandas
 geopandas
+leafmap
+folium
+streamlit-folium
 requests
+matplotlib
 mapclassify
