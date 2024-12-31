@@ -49,27 +49,55 @@ for _, row in df_2000.iterrows():
 st_folium(m, width=800)
 
 # Leafmap 地圖視覺化
-st.subheader("各地區種植面積")
-st.write(data.head())
+# 讀取 CSV 資料
+csv_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/final_planting_area.csv"
+data = pd.read_csv(csv_url)
+
+# 顯示資料以確認是否正確讀取
+st.write("資料已成功讀取：")
+st.write(data.head())  # 顯示資料的前五行
+
+# 顯示資料的列名
+st.write("資料的列名：")
+st.write(data.columns)
+
+# 確認資料框架是否包含所需的欄位
+required_columns = ['緯度', '經度', '種植面積 (公頃)', '年份', '地區']
+missing_columns = [col for col in required_columns if col not in data.columns]
+
+if missing_columns:
+    st.error(f"缺少必要的欄位: {', '.join(missing_columns)}")
+    st.stop()
+
 # 建立 Folium 地圖
 m = folium.Map(location=[24.4, 120.6], zoom_start=8)
 # 定義顏色
 colors = {1920: 'firebrick', 1950: 'indianred', 2000: 'lightcoral'}
-# 確保資料框架正確
-if '緯度' in data.columns and '經度' in data.columns and '種植面積 (公頃)' in data.columns and '年份' in data.columns:
-    for _, row in data.iterrows():
+# 為每一個資料點創建圓形標記
+for _, row in data.iterrows():
+    # 確認緯度和經度是否有效
+    try:
+        latitude = row['緯度']
+        longitude = row['經度']
+        if pd.isna(latitude) or pd.isna(longitude):
+            raise ValueError(f"無效的坐標: {latitude}, {longitude}")
+
+        # 設定顏色，如果年份不在字典中，使用默認顏色
+        color = colors.get(row['年份'], 'gray')
+        
         folium.CircleMarker(
-            location=[row['緯度'], row['經度']],
+            location=[latitude, longitude],
             radius=row['種植面積 (公頃)'] / 10,
-            color=colors.get(row['年份'], 'gray'),  # 若年份不在顏色字典中，設為灰色
+            color=color,
             fill=True,
-            fill_color=colors.get(row['年份'], 'gray'),
+            fill_color=color,
             fill_opacity=0.6,
             tooltip=f"{row['地區']} ({row['年份']}): {row['種植面積 (公頃)']} 公頃"
         ).add_to(m)
 
-    # 在 Streamlit 中顯示 Folium 地圖
-    st.subheader("各地區不同年份種植面積地圖")
-    st_folium(m, width=725)
-else:
-    st.error("資料缺少必要的欄位，請檢查 CSV 檔案")
+    except ValueError as ve:
+        st.warning(f"錯誤資料: {ve}，跳過此資料點。")
+
+# 在 Streamlit 中顯示 Folium 地圖
+st.subheader("各地區不同年份種植面積地圖")
+st_folium(m, width=725)
