@@ -50,21 +50,26 @@ st_folium(m, width=800)
 
 # Leafmap 地圖視覺化
 st.subheader("各地區種植面積")
+st.write(data.head())
+# 建立 Folium 地圖
 m = folium.Map(location=[24.4, 120.6], zoom_start=8)
 # 定義顏色
 colors = {1920: 'firebrick', 1950: 'indianred', 2000: 'lightcoral'}
-# 為每一個資料點創建圓形標記
-for _, row in data.iterrows():
-    folium.CircleMarker(
-        location=[row['緯度'], row['經度']],
-        radius=row['種植面積 (公頃)'] / 10,
-        color=colors[row['年份']],
-        fill=True,
-        fill_color=colors[row['年份']],
-        fill_opacity=0.6,
-        tooltip=f"{row['地區']} ({row['年份']}): {row['種植面積 (公頃)']} 公頃"
-    ).add_to(m)
+# 確保資料框架正確
+if '緯度' in data.columns and '經度' in data.columns and '種植面積 (公頃)' in data.columns and '年份' in data.columns:
+    for _, row in data.iterrows():
+        folium.CircleMarker(
+            location=[row['緯度'], row['經度']],
+            radius=row['種植面積 (公頃)'] / 10,
+            color=colors.get(row['年份'], 'gray'),  # 若年份不在顏色字典中，設為灰色
+            fill=True,
+            fill_color=colors.get(row['年份'], 'gray'),
+            fill_opacity=0.6,
+            tooltip=f"{row['地區']} ({row['年份']}): {row['種植面積 (公頃)']} 公頃"
+        ).add_to(m)
 
-# 在 Streamlit 中顯示 Folium 地圖
-st.subheader("各地區不同年份種植面積地圖")
-st_folium(m, width=725)
+    # 在 Streamlit 中顯示 Folium 地圖
+    st.subheader("各地區不同年份種植面積地圖")
+    st_folium(m, width=725)
+else:
+    st.error("資料缺少必要的欄位，請檢查 CSV 檔案")
