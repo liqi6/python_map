@@ -50,12 +50,21 @@ st_folium(m, width=800)
 
 # Leafmap 地圖視覺化
 st.subheader("各地區種植面積")
-geojson_data = geojson_data.merge(
-    planting_data, left_on="name", right_on="地區", how="left", suffixes=('_geojson', '_csv')
-)
-leafmap_map = leafmap.Map(center=[24.406, 120.653], zoom=12)
-leafmap_map.add_data(geojson_data, column="種植面積 (公頃)", cmap="Blues", legend_title="種植面積 (公頃)")
+m = folium.Map(location=[24.4, 120.6], zoom_start=8)
+# 定義顏色
+colors = {1920: 'firebrick', 1950: 'indianred', 2000: 'lightcoral'}
+# 為每一個資料點創建圓形標記
+for _, row in data.iterrows():
+    folium.CircleMarker(
+        location=[row['緯度'], row['經度']],
+        radius=row['種植面積 (公頃)'] / 10,
+        color=colors[row['年份']],
+        fill=True,
+        fill_color=colors[row['年份']],
+        fill_opacity=0.6,
+        tooltip=f"{row['地區']} ({row['年份']}): {row['種植面積 (公頃)']} 公頃"
+    ).add_to(m)
 
-# 使用 Leafmap 在 Streamlit 中顯示地圖
-leafmap_map.to_streamlit()
-
+# 在 Streamlit 中顯示 Folium 地圖
+st.subheader("各地區不同年份種植面積地圖")
+st_folium(m, width=725)
