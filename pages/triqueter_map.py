@@ -107,15 +107,29 @@ data_1950 = data[data['年份'] == 1950]
 # 合併資料（根據地區名稱）
 gdf = gdf.merge(data_1950, left_on="name", right_on="地區", how="left", suffixes=('_geojson', '_csv'))
 
-# 創建 Leafmap 地圖，設置中心點和縮放級別
-m = leafmap.Map(center=[24.406, 120.653], zoom=12)
+# 創建 Folium 地圖，設置中心點和縮放級別
+m = folium.Map(location=[24.406, 120.653], zoom_start=12)
 
 # 添加種植面積資料到地圖中
-m.add_data(gdf, column="種植面積 (公頃)", cmap="Blues", legend_title="1950年種植面積 (公頃)")
+folium.Choropleth(
+    geo_data=gdf,
+    data=gdf,
+    columns=["name", "種植面積 (公頃)"],
+    key_on="feature.properties.name",
+    fill_color="Blues",
+    legend_name="1950年種植面積 (公頃)"
+).add_to(m)
+
+# 保存地圖為 HTML 文件
+map_html = "map.html"
+m.save(map_html)
 
 # 顯示地圖
 st.subheader("1950年各地區種植面積地圖")
 st.write("這是1950年每個地區的種植面積地圖。")
 
-# 使用 streamlit_folium 顯示 Leafmap 地圖
-st_folium(m, width=725)
+# 使用 Streamlit 內建的 HTML 渲染顯示 Folium 地圖
+with open(map_html, "r") as f:
+    map_html_data = f.read()
+
+st.components.v1.html(map_html_data, width=725, height=600)
