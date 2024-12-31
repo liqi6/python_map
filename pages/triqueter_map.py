@@ -1,9 +1,18 @@
-!pip install -U leafmap
-!pip install fiona
-!pip install folium branca
-!pip install requests geopandas
-!pip install geopandas leafmap pandas
-!pip install mapclassify
+requirements = [
+    "leafmap",
+    "fiona",
+    "folium",
+    "branca",
+    "requests",
+    "geopandas",
+    "pandas",
+    "mapclassify"
+]
+
+with open("requirements.txt", "w") as f:
+    for requirement in requirements:
+        f.write(requirement + "\n")
+pip install -r requirements.txt
 
 import geopandas as gpd
 import leafmap
@@ -29,3 +38,4 @@ for _, row in data.iterrows():
     ).add_to(m)
 
 m.save("output_map.html")
+streamlit run triqueter_map.py
