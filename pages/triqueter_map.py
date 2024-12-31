@@ -50,7 +50,7 @@ st_folium(m, width=800)
 
 # Leafmap 地圖視覺化
 # 讀取 CSV 資料
-csv_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/final_planting_area.csv"
+csv_url = "https://raw.githubusercontent.com/liqi6/test/refs/heads/main/%E8%97%BA%E8%8D%89%E6%AD%B7%E5%8F%B2%E5%88%86%E5%B8%83%E6%95%B8%E6%93%9A.csv"
 data = pd.read_csv(csv_url)
 
 # 顯示資料以確認是否正確讀取
