@@ -1,0 +1,7 @@
+streamlit
+folium
+streamlit-folium
+leafmap
+pandas
+geopandas
+requests
