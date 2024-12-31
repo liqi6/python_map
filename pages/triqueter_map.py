@@ -1,9 +1,9 @@
-!pip install -U leafmap
-!pip install fiona
-!pip install folium branca
-!pip install requests geopandas
-!pip install geopandas leafmap pandas
-!pip install mapclassify
+pip install -U leafmap
+pip install fiona
+pip install folium branca
+pip install requests geopandas
+pip install geopandas leafmap pandas
+pip install mapclassify
 import geopandas as gpd
 import leafmap
 import pandas as pd
