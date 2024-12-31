@@ -5,3 +5,4 @@ leafmap
 pandas
 geopandas
 requests
+mapclassify
