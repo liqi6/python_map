@@ -126,7 +126,6 @@ m.save(map_html)
 
 # 顯示地圖
 st.subheader("1950年各地區種植面積地圖")
-st.write("這是1950年每個地區的種植面積地圖。")
 
 # 使用 Streamlit 內建的 HTML 渲染顯示 Folium 地圖
 with open(map_html, "r") as f:
