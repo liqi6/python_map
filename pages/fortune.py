@@ -17,9 +17,6 @@ colors_data = {
     "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
 }
 
-# 設定圖片存放路徑
-IMAGE_PATH = "static/colours"
-
 # 顯示所有顏色
 st.title("產品顏色列表")
 
@@ -32,9 +29,3 @@ if selected_color:
     st.write(f"感受: {color_info['感受']}")
     st.write(f"心情: {color_info['心情']}")
     
-    # 顯示顏色圖片
-    image_url = f"{IMAGE_PATH}/{selected_color}.jpg"
-    if os.path.exists(image_url):
-        st.image(image_url, caption=selected_color, use_column_width=True)
-    else:
-        st.write("此顏色沒有圖片")
