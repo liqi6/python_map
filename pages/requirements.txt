@@ -8,3 +8,4 @@ requests
 matplotlib
 mapclassify
 selenium
+beautifulsoup4
