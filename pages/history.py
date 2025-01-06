@@ -24,10 +24,10 @@ def main():
     ]
 
     for site in sites:
-        st.header(f"爬取自 {site['url']}")
+        st.header(f"國家文化資產網 {site['url']}")
         results = fetch_static_content(site["url"], site["class_name"])
         for title, link in results:
-            st.write(f"- [{title}]({link})")
+            st.write(f"藺子 [{title}]({link})")
 
 if __name__ == "__main__":
     main()
