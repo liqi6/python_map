@@ -2,40 +2,6 @@ import os
 import random
 import streamlit as st
 
-# 顏色與特性
-colors_data = {
-    "紅色": {"象徵意義": "能量、熱情、行動力", "感受": "熱情、興奮、力量", "心情": "激昂、自信、勇敢"},
-    "橙色": {"象徵意義": "活力、創意、友善", "感受": "活潑、溫暖、親切", "心情": "積極、樂觀、朝氣"},
-    "黃色": {"象徵意義": "智慧、快樂、啟發", "感受": "明亮、溫暖、希望", "心情": "愉悅、啟發、樂觀"},
-    "綠色": {"象徵意義": "平靜、健康、成長", "感受": "清新、放鬆、安全", "心情": "舒心、穩定、安靜"},
-    "藍色": {"象徵意義": "冷靜、穩定、信任", "感受": "平靜、智慧、深邃", "心情": "自省、安定、理性"},
-    "紫色": {"象徵意義": "靈感、高貴、神秘", "感受": "高雅、啟發、浪漫", "心情": "沉思、靈感、夢幻"},
-    "粉紅色": {"象徵意義": "愛情、同情、幸福", "感受": "柔情、甜美、浪漫", "心情": "溫暖、愛意、幸福"},
-    "黑色": {"象徵意義": "權力、神秘、蛻變", "感受": "冷靜、內省、謹慎", "心情": "冷靜、內省、謹慎"},
-    "白色": {"象徵意義": "純潔、新生、希望", "感受": "清新、純淨、輕鬆", "心情": "開放、安寧、平和"},
-    "灰色": {"象徵意義": "中立、平衡、智慧", "感受": "中性、沉穩、現代", "心情": "冷靜、理性、穩重"},
-    "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
-}
-
-# 設定圖片存放路徑
-IMAGE_PATH = "static/colours"
-
-# 顯示所有顏色
-st.title("產品顏色列表")
-
-# 顯示顏色資料
-for color, info in colors_data.items():
-    st.subheader(color)
-    st.write(f"象徵意義: {info['象徵意義']}")
-    st.write(f"感受: {info['感受']}")
-    st.write(f"心情: {info['心情']}")
-    
-    # 顯示顏色對應的圖片
-    image_url = f"{IMAGE_PATH}/{color}.jpg"
-    if os.path.exists(image_url):
-        st.image(image_url, caption=color, use_column_width=True)
-    else:
-        st.write("此顏色沒有圖片")
 
 # 當用戶選擇顏色時，顯示該顏色的詳細資料
 selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
@@ -45,9 +11,3 @@ if selected_color:
     st.write(f"感受: {color_info['感受']}")
     st.write(f"心情: {color_info['心情']}")
     
-    # 顯示顏色圖片
-    image_url = f"{IMAGE_PATH}/{selected_color}.jpg"
-    if os.path.exists(image_url):
-        st.image(image_url, caption=selected_color, use_column_width=True)
-    else:
-        st.write("此顏色沒有圖片")
