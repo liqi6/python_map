@@ -17,6 +17,11 @@ colors_data = {
     "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
 }
 
+# 設定圖片存放路徑
+IMAGE_PATH = "static/colours"
+
+# 顯示所有顏色
+st.title("產品顏色列表")
 
 # 顯示顏色資料
 for color, info in colors_data.items():
