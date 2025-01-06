@@ -36,24 +36,3 @@ if selected_color:
     st.write(f"感受: {color_info['感受']}")
     st.write(f"心情: {color_info['心情']}")
     
-# 設定圖片存放路徑 (Google Drive 共享鏈接)
-IMAGE_PATH = "https://drive.google.com/uc?export=view&id="
-
-image_id_mapping = {
-        "紅色": "1aoGX1vuLopNQLPsUq6Bagkarcmjf5zTf",
-        "橙色": "11bcmgVNMjBDvizKi_U1K-5VJjX9HpBXt",
-        "黃色": "1SqWhHnkVJGyyJgKyqkGdkWLcrNiWHByf",
-        "綠色": "1ulK6MW-NMgpDVwuZDuEXuUjvA4s0zzGo",
-        "藍色": "1BJXRXzlebqIc8eRQYLvjdJ8K6c4-Atqj",
-        "紫色": "1MaFxsTFUUimdroXkkxyC3RA4XIy1kRD6",
-        "粉紅色": "1ObbFyZDFRFIruoO-p-hPBXJf9YHTcftH",
-        "白色": "1hG4ER-luuGj1u258l3oc5HgaUa2DPGIk",
-        "灰色": "1aoGX1vuLopNQLPsUq6Bagkarcmjf5zTf",
-        "水藍色": "1Ao242yXPr-DXqhQKZE4zcmQ6YYFWhsw2",
-    }
-
-    # 根據顏色名稱獲取圖片ID
-    image_url = f"{IMAGE_PATH}{image_id_mapping[selected_color]}"
-
-    # 顯示圖片
-    st.image(image_url, caption=selected_color, use_column_width=True)
