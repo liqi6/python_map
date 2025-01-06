@@ -1,12 +1,6 @@
-import sqlite3
 import os
-from flask import Flask, request, jsonify, g, render_template
-
-# 初始化Flask應用程式
-app = Flask(__name__)
-
-# 設定圖片存放路徑
-IMAGE_PATH = "static/colours"
+import random
+import streamlit as st
 
 # 顏色與特性
 colors_data = {
@@ -23,44 +17,37 @@ colors_data = {
     "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
 }
 
-# 產品種類
-products = ["藺草帽子"]
+# 設定圖片存放路徑
+IMAGE_PATH = "static/colours"
 
-def get_db():
-    if "db" not in g:
-        g.db = sqlite3.connect('color_product.db')
-        g.db.row_factory = sqlite3.Row
-    return g.db
+# 顯示所有顏色
+st.title("產品顏色列表")
 
-@app.teardown_appcontext
-def close_db(exception):
-    db = g.pop("db", None)
-    if db is not None:
-        db.close()
-
-def get_image_url(color_name):
-    """根據顏色名稱返回對應的圖片URL"""
-    filename = f"{color_name}.jpg"  # 假設圖片命名為"顏色名稱.jpg"
-    file_path = os.path.join(IMAGE_PATH, filename)
-    if os.path.exists(file_path):
-        return url_for('static', filename=f"colours/{filename}", _external=True)
+# 顯示顏色資料
+for color, info in colors_data.items():
+    st.subheader(color)
+    st.write(f"象徵意義: {info['象徵意義']}")
+    st.write(f"感受: {info['感受']}")
+    st.write(f"心情: {info['心情']}")
+    
+    # 顯示顏色對應的圖片
+    image_url = f"{IMAGE_PATH}/{color}.jpg"
+    if os.path.exists(image_url):
+        st.image(image_url, caption=color, use_column_width=True)
     else:
-        return None  # 若圖片不存在則返回None
+        st.write("此顏色沒有圖片")
 
-@app.route("/")
-def index():
-    # 顯示產品顏色和相關資訊
-    return render_template("index.html", colors=colors_data)
-
-@app.route("/product/<color_name>")
-def product_details(color_name):
-    # 顯示特定顏色的詳細資料
-    color_info = colors_data.get(color_name)
-    if color_info:
-        image_url = get_image_url(color_name)
-        return render_template("product_details.html", color=color_name, info=color_info, image_url=image_url)
+# 當用戶選擇顏色時，顯示該顏色的詳細資料
+selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
+if selected_color:
+    color_info = colors_data[selected_color]
+    st.write(f"象徵意義: {color_info['象徵意義']}")
+    st.write(f"感受: {color_info['感受']}")
+    st.write(f"心情: {color_info['心情']}")
+    
+    # 顯示顏色圖片
+    image_url = f"{IMAGE_PATH}/{selected_color}.jpg"
+    if os.path.exists(image_url):
+        st.image(image_url, caption=selected_color, use_column_width=True)
     else:
-        return "產品資訊未找到", 404
-
-if __name__ == "__main__":
-    app.run(debug=True)
+        st.write("此顏色沒有圖片")
