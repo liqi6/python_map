@@ -26,7 +26,12 @@ if selected_color:
     st.write(f"象徵意義: {color_info['象徵意義']}")
     st.write(f"感受: {color_info['感受']}")
     st.write(f"心情: {color_info['心情']}")
-    selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()), key="color_selectbox")
+if 'selected_color' not in st.session_state:
+    st.session_state.selected_color = None
+
+selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()), key="color_selectbox")
+st.session_state.selected_color = selected_color
+
   
     # 這裡假設每個顏色的圖片對應於文件夾中的圖片ID
     image_id_mapping = {
