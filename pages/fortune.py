@@ -48,4 +48,11 @@ if selected_color:
 
     # 顯示圖片
     st.image(image_url, caption=selected_color, use_column_width=True)
+    
+# 這是顯示顏色圖片的代碼
+image_url = f"{IMAGE_PATH}/{selected_color}.jpg"
+if os.path.exists(image_url):
+    st.image(image_url, caption=selected_color, use_container_width=True)
+else:
+    st.write("此顏色沒有圖片")
 
