@@ -18,7 +18,7 @@ colors_data = {
 }
 
 # 設定圖片存放路徑
-IMAGE_PATH = "static/colours"
+IMAGE_PATH = "https://drive.google.com/drive/folders/1R4ubYYN917PYknkhH7UGtgcOFh0lhMd6?usp=drive_link"
 
 # 當用戶選擇顏色時，顯示該顏色的詳細資料
 selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
