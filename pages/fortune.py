@@ -1,8 +1,12 @@
-import os
-import random
-import streamlit as st
-from linebot.models import ImageSendMessage, TextSendMessage, TemplateSendMessage, ButtonsTemplate, URIAction
 import sqlite3
+import os
+from flask import Flask, request, jsonify, g, render_template
+
+# 初始化Flask應用程式
+app = Flask(__name__)
+
+# 設定圖片存放路徑
+IMAGE_PATH = "static/colours"
 
 # 顏色與特性
 colors_data = {
@@ -19,55 +23,44 @@ colors_data = {
     "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
 }
 
-# 模擬產品選單
+# 產品種類
 products = ["藺草帽子"]
 
-# 顯示顏色的描述和圖像
-def show_color_info(color_name):
-    """顯示顏色對應的資訊"""
-    if color_name in colors_data:
-        data = colors_data[color_name]
-        st.write(f"顏色: {color_name}")
-        st.write(f"象徵意義: {data['象徵意義']}")
-        st.write(f"感受: {data['感受']}")
-        st.write(f"心情: {data['心情']}")
+def get_db():
+    if "db" not in g:
+        g.db = sqlite3.connect('color_product.db')
+        g.db.row_factory = sqlite3.Row
+    return g.db
+
+@app.teardown_appcontext
+def close_db(exception):
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
+
+def get_image_url(color_name):
+    """根據顏色名稱返回對應的圖片URL"""
+    filename = f"{color_name}.jpg"  # 假設圖片命名為"顏色名稱.jpg"
+    file_path = os.path.join(IMAGE_PATH, filename)
+    if os.path.exists(file_path):
+        return url_for('static', filename=f"colours/{filename}", _external=True)
     else:
-        st.write("抱歉，這個顏色資料不存在。")
+        return None  # 若圖片不存在則返回None
 
-# 顯示產品選單按鈕
-def create_product_buttons_template():
-    """創建產品選單"""
-    button_actions = [URIAction(label=product, uri=f"https://example.com/product/{product}") for product in products]
-    buttons_template = TemplateSendMessage(
-        alt_text="產品選單",
-        template=ButtonsTemplate(
-            title="產品選單",
-            text="請選擇想了解的產品種類",
-            actions=button_actions
-        )
-    )
-    return buttons_template
+@app.route("/")
+def index():
+    # 顯示產品顏色和相關資訊
+    return render_template("index.html", colors=colors_data)
 
-# 顯示產品選單
-def show_product_buttons():
-    st.write("請選擇想了解的產品種類:")
-    for product in products:
-        if st.button(product):
-            st.write(f"您選擇了: {product}")
-
-# 主頁面
-def main():
-    st.title("顏色與產品展示")
-    st.write("請選擇顏色以查看相關資料:")
-
-    # 顯示顏色選項按鈕
-    color = st.selectbox("顏色選擇", list(colors_data.keys()))
-    if st.button("查看顏色資料"):
-        show_color_info(color)
-
-    # 顯示產品選單
-    if st.button("查看產品選單"):
-        show_product_buttons()
+@app.route("/product/<color_name>")
+def product_details(color_name):
+    # 顯示特定顏色的詳細資料
+    color_info = colors_data.get(color_name)
+    if color_info:
+        image_url = get_image_url(color_name)
+        return render_template("product_details.html", color=color_name, info=color_info, image_url=image_url)
+    else:
+        return "產品資訊未找到", 404
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)
