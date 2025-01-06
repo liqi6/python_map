@@ -9,3 +9,4 @@ matplotlib
 mapclassify
 selenium
 beautifulsoup4
+linebot
