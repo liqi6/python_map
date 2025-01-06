@@ -2,6 +2,7 @@ import os
 import random
 import streamlit as st
 
+# 顏色與特性
 colors_data = {
     "紅色": {"象徵意義": "能量、熱情、行動力", "感受": "熱情、興奮、力量", "心情": "激昂、自信、勇敢"},
     "橙色": {"象徵意義": "活力、創意、友善", "感受": "活潑、溫暖、親切", "心情": "積極、樂觀、朝氣"},
@@ -26,13 +27,7 @@ if selected_color:
     st.write(f"象徵意義: {color_info['象徵意義']}")
     st.write(f"感受: {color_info['感受']}")
     st.write(f"心情: {color_info['心情']}")
-if 'selected_color' not in st.session_state:
-    st.session_state.selected_color = None
-
-selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()), key="color_selectbox")
-st.session_state.selected_color = selected_color
-
-  
+    
     # 這裡假設每個顏色的圖片對應於文件夾中的圖片ID
     image_id_mapping = {
         "紅色": "紅色.jpg",
@@ -51,17 +46,6 @@ st.session_state.selected_color = selected_color
     # 根據顏色名稱獲取圖片ID
     image_url = f"{IMAGE_PATH}{image_id_mapping[selected_color]}"
 
-# 當用戶選擇顏色時，顯示該顏色的詳細資料
-selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
-if selected_color:
-    color_info = colors_data[selected_color]
-    st.write(f"象徵意義: {color_info['象徵意義']}")
-    st.write(f"感受: {color_info['感受']}")
-    st.write(f"心情: {color_info['心情']}")
-    
-    # 顯示顏色圖片
-    image_url = f"{IMAGE_PATH}/{selected_color}.jpg"
-    if os.path.exists(image_url):
-        st.image(image_url, caption=selected_color, use_column_width=True)
-    else:
-        st.write("此顏色沒有圖片")
+    # 顯示圖片
+    st.image(image_url, caption=selected_color, use_column_width=True)
+
