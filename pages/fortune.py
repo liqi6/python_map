@@ -17,42 +17,32 @@ colors_data = {
     "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
 }
 
-# 設定圖片存放路徑 (Google Drive 共享鏈接)
-IMAGE_PATH = "https://drive.google.com/uc?export=view&id="
+# 設定圖片存放路徑
+IMAGE_PATH = "static/colours"
 
-# 當用戶選擇顏色時，顯示該顏色的詳細資料
-selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
-if selected_color:
-    color_info = colors_data[selected_color]
-    st.write(f"象徵意義: {color_info['象徵意義']}")
-    st.write(f"感受: {color_info['感受']}")
-    st.write(f"心情: {color_info['心情']}")
-    
-    # 這裡假設每個顏色的圖片對應於文件夾中的圖片ID
-    image_id_mapping = {
-        "紅色": "紅色.jpg",
-        "橙色": "橙色.jpg",
-        "黃色": "黃色.jpg",
-        "綠色": "綠色.jpg",
-        "藍色": "藍色.jpg",
-        "紫色": "紫色.jpg",
-        "粉紅色": "粉紅色.jpg",
-        "黑色": "黑色.jpg",
-        "白色": "白色.jpg",
-        "灰色": "灰色.jpg",
-        "水藍色": "水藍色.jpg",
-    }
+# 隨機選擇顏色
+random_color = random.choice(list(colors_data.keys()))
 
-    # 根據顏色名稱獲取圖片ID
-    image_url = f"{IMAGE_PATH}{image_id_mapping[selected_color]}"
+# 顯示隨機顏色的資料
+st.title("今天的顏色")
+st.subheader(random_color)
+color_info = colors_data[random_color]
+st.write(f"象徵意義: {color_info['象徵意義']}")
+st.write(f"感受: {color_info['感受']}")
+st.write(f"心情: {color_info['心情']}")
 
-    # 顯示圖片
-    st.image(image_url, caption=selected_color, use_column_width=True)
-    
-# 這是顯示顏色圖片的代碼
-image_url = f"{IMAGE_PATH}/{selected_color}.jpg"
+# 顯示顏色圖片
+image_url = f"{IMAGE_PATH}/{random_color}.jpg"
 if os.path.exists(image_url):
-    st.image(image_url, caption=selected_color, use_container_width=True)
+    st.image(image_url, caption=random_color, use_container_width=True)
 else:
     st.write("此顏色沒有圖片")
 
+# 顯示顏色資料
+st.title("所有顏色的詳細資料")
+for color, info in colors_data.items():
+    st.subheader(color)
+    st.write(f"象徵意義: {info['象徵意義']}")
+    st.write(f"感受: {info['感受']}")
+    st.write(f"心情: {info['心情']}")
+    
