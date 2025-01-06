@@ -9,4 +9,4 @@ matplotlib
 mapclassify
 selenium
 beautifulsoup4
-linebot==1.20.0
+Flask
