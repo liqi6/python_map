@@ -1,6 +1,17 @@
 import os
 import random
 import streamlit as st
+import random
+
+# 顏色列表
+colors = ["紅色", "橙色", "黃色", "綠色", "藍色", "紫色", "粉紅色", "黑色", "白色", "灰色", "水藍色"]
+
+# 隨機選擇一個顏色
+selected_color = random.choice(colors)
+
+# 顯示隨機選擇的顏色
+print(f"今天的幸運色是: {selected_color}")
+
 
 # 顏色與特性
 colors_data = {
