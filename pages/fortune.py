@@ -2,7 +2,6 @@ import os
 import random
 import streamlit as st
 
-# 顏色與特性
 colors_data = {
     "紅色": {"象徵意義": "能量、熱情、行動力", "感受": "熱情、興奮、力量", "心情": "激昂、自信、勇敢"},
     "橙色": {"象徵意義": "活力、創意、友善", "感受": "活潑、溫暖、親切", "心情": "積極、樂觀、朝氣"},
@@ -17,8 +16,34 @@ colors_data = {
     "水藍色": {"象徵意義": "自由、清新、希望", "感受": "清涼、純粹、輕快", "心情": "自由、舒適、放鬆"},
 }
 
-# 設定圖片存放路徑
-IMAGE_PATH = "https://drive.google.com/drive/folders/1R4ubYYN917PYknkhH7UGtgcOFh0lhMd6?usp=drive_link"
+# 設定圖片存放路徑 (Google Drive 共享鏈接)
+IMAGE_PATH = "https://drive.google.com/uc?export=view&id="
+
+# 當用戶選擇顏色時，顯示該顏色的詳細資料
+selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
+if selected_color:
+    color_info = colors_data[selected_color]
+    st.write(f"象徵意義: {color_info['象徵意義']}")
+    st.write(f"感受: {color_info['感受']}")
+    st.write(f"心情: {color_info['心情']}")
+    
+    # 這裡假設每個顏色的圖片對應於文件夾中的圖片ID
+    image_id_mapping = {
+        "紅色": "紅色.jpg",
+        "橙色": "橙色.jpg",
+        "黃色": "黃色.jpg",
+        "綠色": "綠色.jpg",
+        "藍色": "藍色.jpg",
+        "紫色": "紫色.jpg",
+        "粉紅色": "粉紅色.jpg",
+        "黑色": "黑色.jpg",
+        "白色": "白色.jpg",
+        "灰色": "灰色.jpg",
+        "水藍色": "水藍色.jpg",
+    }
+
+    # 根據顏色名稱獲取圖片ID
+    image_url = f"{IMAGE_PATH}{image_id_mapping[selected_color]}"
 
 # 當用戶選擇顏色時，顯示該顏色的詳細資料
 selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
