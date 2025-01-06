@@ -17,6 +17,9 @@ def fetch_static_content(url, class_name):
         for el in elements:
             title = el.get_text(strip=True)
             link = el.get("href")
+            # 確保連結為完整的URL
+            if link and not link.startswith('http'):
+                link = f'https://www.sunnyrush.com{link}'  # 根據需要修改為正確的基礎 URL
             if title and link:
                 results.append((title, link))
         return results
