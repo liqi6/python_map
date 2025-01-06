@@ -23,19 +23,6 @@ IMAGE_PATH = "static/colours"
 # 顯示所有顏色
 st.title("產品顏色列表")
 
-# 顯示顏色資料
-for color, info in colors_data.items():
-    st.subheader(color)
-    st.write(f"象徵意義: {info['象徵意義']}")
-    st.write(f"感受: {info['感受']}")
-    st.write(f"心情: {info['心情']}")
-    
-    # 顯示顏色對應的圖片
-    image_url = f"{IMAGE_PATH}/{color}.jpg"
-    if os.path.exists(image_url):
-        st.image(image_url, caption=color, use_column_width=True)
-    else:
-        st.write("此顏色沒有圖片")
 
 # 當用戶選擇顏色時，顯示該顏色的詳細資料
 selected_color = st.selectbox("選擇一個顏色", list(colors_data.keys()))
